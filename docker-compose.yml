@@ -1,0 +1,64 @@
+version: "3.9"
+services: 
+  db:
+    restart: always
+    image: postgres
+    container_name: postgres
+    environment: 
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: Cablegram
+    volumes: 
+      - ./pgdata:/var/lib/postgresql/data
+    ports: 
+      - '5433:5432'
+    networks: 
+      - backend
+
+  rabbitmq: 
+    image: rabbitmq:3-management
+    restart: always
+    container_name: rabbitmq
+    tty: true
+    networks: 
+      - backend
+    ports: 
+      - '15672:15672'
+      - '5672:5672'
+    volumes:
+      - ./rabbit-data:/var/lib/rabbitmq
+
+  user:
+    build: 
+      context: ./user
+      dockerfile: Dockerfile
+    image: cablegram/user
+    container_name: cablegram_user_microservice
+    restart: always
+    env_file: 
+      - .env
+    depends_on: 
+      - db
+      - rabbitmq
+    networks: 
+      - backend
+
+  gateway: 
+    build: 
+      context: ./gateway
+      dockerfile: Dockerfile
+    image: cablegram/gateway
+    container_name: cablegram_gateway
+    depends_on: 
+      - user
+    restart: always
+    env_file: 
+      - .env
+    networks: 
+      - backend
+    ports: 
+      - '8000:8000'
+    
+networks: 
+  backend: 
+    driver: bridge
