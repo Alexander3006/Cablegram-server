@@ -1,12 +1,12 @@
 import { RoomGrantRolesEnum } from 'src/domain/model/roomGrant/RoomGrantRole.value';
 
-export class createRoomGrantDto {
+export class CreateRoomGrantDto {
   author: string;
   delegat: string;
   room: number;
 }
 
-export class updateRoomGrantDto {
+export class UpdateRoomGrantDto {
   author: string;
   delegat: string;
   room: number;
@@ -17,4 +17,12 @@ export class DeleteRoomGrantDto {
   initiator: string;
   delegat: string;
   room: number;
+}
+
+export class RoomGrantDto {
+  id: number;
+  author: string;
+  delegat: string;
+  room: number;
+  role: RoomGrantRolesEnum;
 }

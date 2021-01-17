@@ -8,9 +8,9 @@ import {
 import { UserId } from 'src/domain/model/roomGrant/UserId.value';
 import { RoomGrantRepository } from 'src/infrastructure/dataAccess/repositories/RoomGrant.repository';
 import {
-  createRoomGrantDto,
+  CreateRoomGrantDto,
   DeleteRoomGrantDto,
-  updateRoomGrantDto,
+  UpdateRoomGrantDto,
 } from './interfaces/roomGrants.dto';
 
 const DEFAULT_ROLE = RoomGrantRolesEnum.USER;
@@ -22,7 +22,7 @@ export class RoomGrantsService {
     this._logger = new Logger(RoomGrantsService.name);
   }
 
-  async create(roomGrantDto: createRoomGrantDto): Promise<RoomGrant> {
+  async create(roomGrantDto: CreateRoomGrantDto): Promise<RoomGrant> {
     try {
       const { author, delegat, room } = roomGrantDto;
       const roomId = RoomId.create(room);
@@ -49,7 +49,7 @@ export class RoomGrantsService {
     }
   }
 
-  async update(roomGrantDto: updateRoomGrantDto): Promise<RoomGrant> {
+  async update(roomGrantDto: UpdateRoomGrantDto): Promise<RoomGrant> {
     try {
       const { author, delegat, room, role } = roomGrantDto;
       const roomId = RoomId.create(room);
