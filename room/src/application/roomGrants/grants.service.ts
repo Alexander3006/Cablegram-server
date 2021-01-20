@@ -106,4 +106,19 @@ export class RoomGrantsService {
       throw new Error('RoomGrant deleting error');
     }
   }
+
+  async getGrantByUserAndRoom(
+    room: number,
+    delegat: string,
+  ): Promise<RoomGrant> {
+    try {
+      const roomId = RoomId.create(room);
+      const userId = UserId.create(delegat);
+      const roomGrant = await this._roomGrantRepository.get(roomId, userId);
+      return roomGrant;
+    } catch (err) {
+      this._logger.error(err);
+      throw new Error('Error finding room grant');
+    }
+  }
 }

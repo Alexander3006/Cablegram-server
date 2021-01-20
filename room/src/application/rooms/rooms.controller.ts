@@ -1,6 +1,5 @@
 import { Controller, Logger } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { Room } from 'src/domain/model/room/Room.aggregate';
 import { roomToRoomDto } from 'src/tools/mappers';
 import { CreateRoomDto, RoomDto } from './interfaces/rooms.dto';
 import { RoomsService } from './rooms.service';
