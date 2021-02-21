@@ -8,7 +8,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { REFRESH_HEADER } from 'src/configurations/headers.config';
-import { AuthService } from 'src/infrastructure/authService/auth.service';
+import { AuthService } from 'src/infrastructure/auth/auth.service';
 import { AuthDto } from 'src/interfaces/authService.interface';
 
 @Controller('auth')

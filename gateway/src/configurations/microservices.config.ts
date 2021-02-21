@@ -24,6 +24,14 @@ export default () => {
         ...defaultConfig,
         queue: process.env.AUTH_SERVICE_QUEUE,
       },
+      message: {
+        ...defaultConfig,
+        queue: process.env.MESSAGE_SERVICE_QUEUE,
+      },
+      room: {
+        ...defaultConfig,
+        queue: process.env.ROOM_SERVICE_QUEUE,
+      },
     },
   };
 };

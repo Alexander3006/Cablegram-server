@@ -2,12 +2,14 @@ import {
   BadRequestException,
   Body,
   Controller,
-  Get,
+  Delete,
   Logger,
   Post,
+  UseGuards,
 } from '@nestjs/common';
-import { UsersService } from '../infrastructure/usersServrice/users.service';
-import { CreateUserDto } from '../interfaces/usersService.interface';
+import { AuthGuard, RequestClient } from 'src/infrastructure/auth/auth.guards';
+import { UsersService } from '../infrastructure/users/users.service';
+import { CreateUserDto, UserDto } from '../interfaces/usersService.interface';
 
 @Controller('user')
 export class UsersController {
@@ -28,9 +30,44 @@ export class UsersController {
     }
   }
 
-  @Get('hello')
-  async sayHello() {
-    console.dir('ok');
-    return 'Hello';
+  @Delete('delete')
+  @UseGuards(AuthGuard)
+  async deleteUser(@RequestClient() user: UserDto) {
+    try {
+      const success = await this._usersService.delete(user.id);
+      if (!success) return new BadRequestException('User not deleted');
+      return success;
+    } catch (err) {
+      this._logger.error(err);
+      return err;
+    }
+  }
+
+  @Post('update')
+  @UseGuards(AuthGuard)
+  async updateUser(
+    @RequestClient() user: UserDto,
+    @Body('tag') tag?: string,
+    @Body('name') name?: string,
+    @Body('surname') surname?: string,
+    @Body('phone') phone?: string,
+    @Body('gender') gender?: string,
+  ) {
+    try {
+      const updateUserDto = new UserDto(
+        user.id,
+        tag ?? user.tag,
+        name ?? user.name,
+        surname ?? user.surname,
+        phone ?? user.phone,
+        gender ?? user.gender,
+      );
+      const userDto = await this._usersService.update(updateUserDto);
+      if (!userDto) return new BadRequestException('User not updated');
+      return userDto;
+    } catch (err) {
+      this._logger.error(err);
+      return err;
+    }
   }
 }

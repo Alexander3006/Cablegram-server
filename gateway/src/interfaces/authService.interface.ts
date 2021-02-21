@@ -1,13 +1,11 @@
 import { UserDto } from './usersService.interface';
 
 export class AuthDto {
-  email: string;
-  password: string;
+  constructor(public email: string, public password: string) {}
 }
 
 export class JwtTokens {
-  access: string;
-  refresh: string;
+  constructor(public access: string, public refresh: string) {}
 }
 
 export interface IAuthService {

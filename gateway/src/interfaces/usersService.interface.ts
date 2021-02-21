@@ -1,20 +1,24 @@
 export class CreateUserDto {
-  tag: string;
-  name: string;
-  surname: string;
-  phone: string;
-  gender: string;
-  email: string;
-  password: string;
+  constructor(
+    public tag: string,
+    public name: string,
+    public surname: string,
+    public phone: string,
+    public gender: string,
+    public email: string,
+    public password: string,
+  ) {}
 }
 
 export class UserDto {
-  id: string;
-  tag: string;
-  name: string;
-  surname: string;
-  phone: string;
-  gender: string;
+  constructor(
+    public id: string,
+    public tag: string,
+    public name: string,
+    public surname: string,
+    public phone: string,
+    public gender: string,
+  ) {}
 }
 
 export interface IUsersService {

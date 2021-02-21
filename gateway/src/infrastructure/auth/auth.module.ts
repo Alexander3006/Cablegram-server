@@ -2,6 +2,7 @@ import { Module, Provider } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ClientProxyFactory, Transport } from '@nestjs/microservices';
 import { MicroserviceConfig } from 'src/configurations/microservices.config';
+import { AuthGuard } from './auth.guards';
 import { AuthService } from './auth.service';
 
 const AuthMicroserviceProvider: Provider = {
@@ -31,7 +32,7 @@ const AuthServiceProvider: Provider = {
 
 @Module({
   imports: [ConfigModule],
-  providers: [AuthMicroserviceProvider, AuthServiceProvider],
+  providers: [AuthMicroserviceProvider, AuthServiceProvider, AuthGuard],
   exports: [AuthMicroserviceProvider, AuthServiceProvider],
 })
 export class AuthModule {}
