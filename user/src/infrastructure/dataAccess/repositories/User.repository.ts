@@ -50,7 +50,7 @@ export class UserRepository implements IUserRepository {
     try {
       const userEntity = new UserEntity();
       userEntity.id = user.id;
-      await this._manager.remove(user);
+      await this._manager.remove(userEntity);
     } catch (err) {
       this._logger.error(err);
       throw new Error('Error deleting user');

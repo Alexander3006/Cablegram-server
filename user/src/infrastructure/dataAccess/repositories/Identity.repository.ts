@@ -84,6 +84,7 @@ export class IdentityRepository implements IIdentityRepository {
       const { id, user, email, hash, salt } = await this._manager.findOne(
         IdentityEntity,
         {
+          relations: ['user'],
           where: {
             email: options.email,
           },
