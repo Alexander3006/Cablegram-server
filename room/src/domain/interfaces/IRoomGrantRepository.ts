@@ -14,5 +14,5 @@ export interface IRoomGrantRepository {
   delete(roomGrant: RoomGrantId): Promise<void>;
   update(roomGrant: RoomGrant): Promise<RoomGrant>;
   get(roomId: RoomId, delegatId: UserId): Promise<RoomGrant>;
-  getAll(options: RoomId): Promise<RoomGrant[]>;
+  getAll(options: UserId): Promise<RoomGrant[]>;
 }

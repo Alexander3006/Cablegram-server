@@ -31,7 +31,7 @@ export class RoomGrantsService {
         roomId,
         delegatId,
       );
-      if (delegatGrant) throw new Error('Grant already exist');
+      if (!!delegatGrant) throw new Error('Grant already exist');
       const authorId = UserId.create(author);
       const authorGrant = await this._roomGrantRepository.get(roomId, authorId);
       if (!authorGrant) throw new Error('Do not have permission');
@@ -95,7 +95,7 @@ export class RoomGrantsService {
       );
       if (!initiatorGrant) throw new Error('Do not have permission');
       if (
-        !initiatorGrant.roomGrantRole.canDelete(delegatGrant.roomGrantRole) ||
+        !initiatorGrant.roomGrantRole.canDelete(delegatGrant.roomGrantRole) &&
         initiator !== delegat
       ) {
         throw new Error('Do not have permission');
@@ -119,6 +119,17 @@ export class RoomGrantsService {
     } catch (err) {
       this._logger.error(err);
       throw new Error('Error finding room grant');
+    }
+  }
+
+  async getGrantsByUser(delegat: string): Promise<RoomGrant[]> {
+    try {
+      const userId = UserId.create(delegat);
+      const roomGrants = await this._roomGrantRepository.getAll(userId);
+      return roomGrants;
+    } catch (err) {
+      this._logger.error(err);
+      throw new Error('Error finding room grants');
     }
   }
 }

@@ -5,6 +5,7 @@ import { ConnectionOptions } from 'typeorm';
 import { getOrmConfig } from 'src/configurations/orm.config';
 import { RoomGrantsModule } from './application/roomGrants/grants.module';
 import { RoomsModule } from './application/rooms/rooms.module';
+import { PermissionsModule } from './application/permissions/permissions.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { RoomsModule } from './application/rooms/rooms.module';
 
     RoomGrantsModule,
     RoomsModule,
+    PermissionsModule,
   ],
   controllers: [],
   providers: [],

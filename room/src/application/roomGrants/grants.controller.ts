@@ -54,4 +54,17 @@ export class RoomGrantsController {
       return;
     }
   }
+
+  @MessagePattern({ cmd: 'get-grants-by-delegate' })
+  async getGrantsByDelegate(
+    @Payload() delegateId: string,
+  ): Promise<RoomGrantDto[]> {
+    try {
+      const grants = await this._roomGrantsService.getGrantsByUser(delegateId);
+      return grants.map(grant => roomGrantToRoomGrantDto(grant));
+    } catch (err) {
+      this._logger.error(err);
+      return;
+    }
+  }
 }

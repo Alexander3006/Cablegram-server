@@ -12,7 +12,7 @@ export class RoomGrantRole {
   }
 
   public static create(role: RoomGrantRolesEnum): RoomGrantRole {
-    if (!role) throw new Error('Rooms role do not exist');
+    if (role === undefined) throw new Error('Rooms role do not exist');
     return new RoomGrantRole(role);
   }
 

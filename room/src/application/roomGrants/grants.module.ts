@@ -7,6 +7,6 @@ import { RoomGrantsService } from './grants.service';
   imports: [DataAccess],
   providers: [RoomGrantsService],
   controllers: [RoomGrantsController],
-  exports: [],
+  exports: [RoomGrantsService],
 })
 export class RoomGrantsModule {}

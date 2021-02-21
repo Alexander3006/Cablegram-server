@@ -15,11 +15,6 @@ const defaultConfig = {
 
 export default () => {
   return {
-    microservices: {
-      message: {
-        ...defaultConfig,
-        queue: process.env.MESSAGE_SERVICE_QUEUE,
-      } as MicroserviceConfig,
-    },
+    microservices: {},
   };
 };

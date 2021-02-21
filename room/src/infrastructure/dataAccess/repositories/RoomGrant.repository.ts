@@ -78,46 +78,31 @@ export class RoomGrantRepository implements IRoomGrantRepository {
     }
   }
 
-  // async get(options: RoomGrantId): Promise<RoomGrant> {
-  //   try {
-  //     const { id, room, author, delegat, role } = await this._manager.findOne(
-  //       RoomGrantEntity,
-  //       {
-  //         where: {
-  //           id: options.id,
-  //         },
-  //       },
-  //     );
-  //     return RoomGrant.create(id, room.id, author, delegat, role);
-  //   } catch (err) {
-  //     this._logger.error(err);
-  //     throw new Error(`GrantRoom search error`);
-  //   }
-  // }
-
   async get(roomId: RoomId, delegatId: UserId): Promise<RoomGrant> {
     try {
-      const { id, room, author, delegat, role } = await this._manager.findOne(
-        RoomGrantEntity,
-        {
-          where: {
-            room: roomId.id,
-            delegat: delegatId.id,
-          },
+      const grantDto = await this._manager.findOne(RoomGrantEntity, {
+        relations: ['room'],
+        where: {
+          room: roomId.id,
+          delegat: delegatId.id,
         },
-      );
-      return RoomGrant.create(id, room.id, author, delegat, role);
+      });
+      if (!grantDto) return;
+      const { id, room, author, delegat, role } = grantDto;
+      const roomGrant = RoomGrant.create(id, room.id, author, delegat, role);
+      return roomGrant;
     } catch (err) {
       this._logger.error(err);
       throw new Error(`GrantRoom search error`);
     }
   }
 
-  async getAll(options: RoomId): Promise<RoomGrant[]> {
+  async getAll(options: UserId): Promise<RoomGrant[]> {
     try {
       const roomGrantEntities = await this._manager.find(RoomGrantEntity, {
+        relations: ['room'],
         where: {
-          room: options.id,
+          delegat: options.id,
         },
       });
       const roomGrants = roomGrantEntities.map(roomGrantEntity => {
