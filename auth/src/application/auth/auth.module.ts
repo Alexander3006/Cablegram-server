@@ -8,7 +8,7 @@ import { JsonWebTokenService, JwtOptions } from './jsonWebToken.service';
 
 const JsonWebTokenServiceProvider: Provider = {
   provide: JsonWebTokenService,
-  useFactory: <P extends object, T extends object>(_config: ConfigService) => {
+  useFactory: <P, T>(_config: ConfigService) => {
     const jwtOptions: JwtOptions = _config.get<JwtOptions>('jwt');
     return new JsonWebTokenService<P, T>(jwtOptions);
   },

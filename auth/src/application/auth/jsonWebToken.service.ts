@@ -10,8 +10,8 @@ export interface JwtOptions {
 
 @Injectable()
 export class JsonWebTokenService<
-  AccessPayload extends object,
-  RefreshPayload extends object
+  AccessPayload,
+  RefreshPayload
 > {
   private secret_access_token: string;
   private secret_refresh_token: string;
