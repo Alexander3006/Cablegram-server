@@ -1,4 +1,4 @@
-import { ContentTypeEnum } from 'src/domain/model/content/ContentBody.value';
+import { ContentTypeEnum } from '../../../domain/model/content/ContentBody.value';
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { MessageEntity } from './Message.entity';
 

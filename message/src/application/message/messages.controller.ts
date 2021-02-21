@@ -1,12 +1,17 @@
 import { Controller, Logger } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { CreateMessageDto } from './interfaces/messages.dto';
+import { NotificationService } from 'src/infrastructure/notification/notification.service';
+import { messageToMessageDto } from 'src/tools/messages.mapper';
+import { CreateMessageDto, MessageEvent } from './interfaces/messages.dto';
 import { MessagesService } from './messages.service';
 
 @Controller()
 export class MessagesController {
   private readonly _logger: Logger;
-  constructor(private readonly _messagesService: MessagesService) {
+  constructor(
+    private readonly _messagesService: MessagesService,
+    private readonly _notificationService: NotificationService,
+  ) {
     this._logger = new Logger(MessagesController.name);
   }
 
@@ -16,7 +21,13 @@ export class MessagesController {
       const message = await this._messagesService.createMessage(
         createMessageDto,
       );
-      return message;
+      const messageDto = messageToMessageDto(message);
+      await this._notificationService.notifyRoom(
+        messageDto.room,
+        MessageEvent.NewMessage,
+        messageDto,
+      );
+      return messageDto;
     } catch (err) {
       this._logger.error(err);
       return;

@@ -20,6 +20,10 @@ export default () => {
         ...defaultConfig,
         queue: process.env.ROOM_SERVICE_QUEUE,
       } as MicroserviceConfig,
+      notification: {
+        ...defaultConfig,
+        queue: process.env.NOTIFICATION_SERVICE_QUEUE,
+      } as MicroserviceConfig,
     },
   };
 };
