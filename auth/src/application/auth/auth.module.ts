@@ -2,6 +2,7 @@ import { Module, Provider } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { UsersModule } from 'src/infrastructure/usersService/users.module';
 import { UsersService } from 'src/infrastructure/usersService/users.service';
+import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { JsonWebTokenService, JwtOptions } from './jsonWebToken.service';
 
@@ -22,7 +23,7 @@ const AuthServiceProvider: Provider = {
 @Module({
   imports: [UsersModule],
   providers: [UsersService, JsonWebTokenServiceProvider, AuthServiceProvider],
-  controllers: [],
+  controllers: [AuthController],
   exports: [JsonWebTokenServiceProvider, AuthServiceProvider],
 })
 export class AuthModule {}
