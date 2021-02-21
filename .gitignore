@@ -106,3 +106,4 @@ dist
 
 /pgdata
 /rabbit-data
+/cert
